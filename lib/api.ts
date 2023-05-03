@@ -1,29 +1,16 @@
-import type { Workout } from './types';
+export const BASE_URL = 'https://iwilsonq.com';
 
-class ApiClient {
-  readonly baseUrl: string = 'https://iwilsonq.com/api';
+export function queryString(obj: {
+  [key: string]: string | number;
+}): string {
+  if (Object.keys(obj).length === 0) return '';
 
-  constructor(baseUrl?: string) {
-    if (baseUrl !== undefined) {
-      this.baseUrl = baseUrl;
-    }
+  let result: string[] = [];
+  for (const key in obj) {
+    if (obj[key] == null) continue;
+
+    result.push(`${key}=${obj[key]}`);
   }
-}
 
-class WorkoutsClient extends ApiClient {
-  async getAll(
-    offset: number = 0,
-    limit: number = 10
-  ): Promise<Workout[]> {
-    return new Promise((resolve, reject) => {
-      fetch(
-        `${this.baseUrl}/workouts?limit=${limit}&offset=${offset}`
-      )
-        .then((data) => data.json())
-        .then((data) => resolve(data.records))
-        .catch((err) => reject(err));
-    });
-  }
+  return `?${result.join('&')}`;
 }
-
-export const workoutsClient = new WorkoutsClient();
