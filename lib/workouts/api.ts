@@ -3,15 +3,15 @@ import { BASE_URL, queryString } from '../api';
 import type { Workout } from './types';
 
 interface FetcherArgs {
-  url: string;
-  args: { [key: string]: string | number };
+  path: string;
+  params: { [k: string]: string | number };
 }
 
-function fetcher<T>({ url, args }: FetcherArgs): Promise<T> {
-  const query = queryString(args);
+function fetcher<T>({ path, params }: FetcherArgs): Promise<T> {
+  const query = queryString(params);
 
   return new Promise((resolve, reject) => {
-    fetch(`${BASE_URL}${url}${query}`)
+    fetch(`${BASE_URL}${path}${query}`)
       .then((data) => data.json())
       .then((data) => resolve(data.records))
       .catch((err) => reject(err));
@@ -27,7 +27,7 @@ export function useWorkouts(
   { offset, limit }: UseWorkoutsParams = { offset: 0, limit: 10 }
 ): SWRResponse<Workout[], string> {
   return useSWR<Workout[]>(
-    { url: '/api/workouts', args: { offset, limit } },
+    { path: '/api/workouts', params: { offset, limit } },
     fetcher
   );
 }
