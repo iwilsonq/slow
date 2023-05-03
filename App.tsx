@@ -6,6 +6,7 @@ import WorkoutList from './screens/WorkoutList';
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" />
       <WorkoutList />
     </SafeAreaView>
   );

@@ -7,6 +7,7 @@ import { useWorkouts } from '../lib/workouts/api';
 export default function WorkoutList() {
   const { data: workouts, isLoading, error } = useWorkouts();
 
+  console.log(isLoading, workouts);
   return (
     <View style={styles.container}>
       <Text style={typography.title}>Workouts</Text>

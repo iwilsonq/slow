@@ -1,6 +1,6 @@
 export const BASE_URL = 'https://iwilsonq.com';
 
-export function queryString(obj: {
+export function stringify(obj: {
   [key: string]: string | number;
 }): string {
   if (Object.keys(obj).length === 0) return '';

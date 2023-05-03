@@ -1,5 +1,5 @@
 import useSWR, { SWRResponse } from 'swr';
-import { BASE_URL, queryString } from '../api';
+import { BASE_URL, stringify } from '../api';
 import type { Workout } from './types';
 
 interface FetcherArgs {
@@ -8,12 +8,12 @@ interface FetcherArgs {
 }
 
 function fetcher<T>({ path, params }: FetcherArgs): Promise<T> {
-  const query = queryString(params);
+  const query = stringify(params);
 
   return new Promise((resolve, reject) => {
     fetch(`${BASE_URL}${path}${query}`)
-      .then((data) => data.json())
-      .then((data) => resolve(data.records))
+      .then((response) => response.json() as T)
+      .then((data) => resolve(data))
       .catch((err) => reject(err));
   });
 }
